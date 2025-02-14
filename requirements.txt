@@ -1,0 +1,10 @@
+pandas
+seaborn
+python-dotenv
+pandasai
+openpyxl
+langchain
+langchain_groq
+langchain_community
+streamlit
+matplotlib
