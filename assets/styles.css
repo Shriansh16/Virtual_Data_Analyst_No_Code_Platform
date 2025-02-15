@@ -1,0 +1,16 @@
+/* assets/styles.css */
+
+.stButton>button {
+    width: 100%;
+}
+
+.css-1d391kg {
+    padding: 1rem;
+}
+
+.stats-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+    margin: 0.5rem 0;
+}
