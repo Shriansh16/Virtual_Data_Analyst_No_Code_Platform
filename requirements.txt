@@ -8,3 +8,5 @@ langchain_groq
 langchain_community
 streamlit
 matplotlib
+plotly
+statsmodels
