@@ -9,6 +9,8 @@ from datetime import datetime
 from config import SAMPLE_DATASETS
 from PIL import Image
 import os
+import io
+import plotly.io as pio
 
 # Page configuration
 st.set_page_config(page_title="Virtual Data Analyst", layout="wide")
@@ -42,7 +44,7 @@ st.subheader("📂 Data Input")
 upload_col1, upload_col2 = st.columns([2, 1])
 
 with upload_col1:
-    uploaded_file = st.file_uploader("Upload a CSV or Excel file", type=['csv', 'xlsx'])
+    uploaded_file = st.file_uploader("Upload a CSV file", type=['csv'])
 with upload_col2:
     sample_data = st.selectbox(
         "Or try sample dataset",
@@ -97,11 +99,13 @@ if data is not None:
 
                 with col1:
                     st.write("#### 📊 Basic Statistics")
-                    st.dataframe(calculate_basic_stats(numeric_data))
+                    basic_stats = calculate_basic_stats(numeric_data)
+                    st.dataframe(basic_stats)
 
                 with col2:
                     st.write("#### 📈 Quartile Statistics")
-                    st.dataframe(calculate_quartile_stats(numeric_data))
+                    quartile_stats = calculate_quartile_stats(numeric_data)
+                    st.dataframe(quartile_stats)
 
             with stats_tab2:
                 col1, col2 = st.columns(2)
@@ -130,7 +134,8 @@ if data is not None:
             # Enhanced Correlation Analysis
             st.write("### 🔗 Correlation Analysis")
             correlation_matrix = numeric_data.corr()
-            st.plotly_chart(plot_correlation_heatmap(correlation_matrix), use_container_width=True)
+            correlation_heatmap = plot_correlation_heatmap(correlation_matrix)
+            st.plotly_chart(correlation_heatmap, use_container_width=True)
 
             # Strong Correlations
             st.write("#### 💪 Strong Correlations")
@@ -150,7 +155,8 @@ if data is not None:
             numeric_col = st.selectbox("Select Value Column", data.select_dtypes(include=['float64', 'int64']).columns)
 
             window_size = st.slider("Moving Average Window Size", min_value=2, max_value=30, value=7)
-            st.plotly_chart(plot_time_series(data, date_col, numeric_col, window_size), use_container_width=True)
+            time_series_plot = plot_time_series(data, date_col, numeric_col, window_size)
+            st.plotly_chart(time_series_plot, use_container_width=True)
 
         # Distribution Analysis
         st.subheader("📊 Distribution Analysis")
@@ -158,20 +164,23 @@ if data is not None:
 
         with col1:
             selected_feature = st.selectbox("Select Feature for Distribution", data.columns)
-            st.plotly_chart(plot_distribution(data, selected_feature), use_container_width=True)
+            distribution_plot = plot_distribution(data, selected_feature)
+            st.plotly_chart(distribution_plot, use_container_width=True)
 
         with col2:
             if len(numeric_data.columns) >= 2:
                 x_feature = st.selectbox("Select X Feature for Scatter Plot", numeric_data.columns)
                 y_feature = st.selectbox("Select Y Feature for Scatter Plot",
                                        [col for col in numeric_data.columns if col != x_feature])
-                st.plotly_chart(plot_scatter(data, x_feature, y_feature), use_container_width=True)
+                scatter_plot = plot_scatter(data, x_feature, y_feature)
+                st.plotly_chart(scatter_plot, use_container_width=True)
 
         # Outlier Analysis
         st.subheader("🔍 Outlier Analysis")
         if not numeric_data.empty:
             outlier_feature = st.selectbox("Select Feature for Outlier Analysis", numeric_data.columns)
-            st.plotly_chart(plot_boxplot(data, outlier_feature), use_container_width=True)
+            boxplot = plot_boxplot(data, outlier_feature)
+            st.plotly_chart(boxplot, use_container_width=True)
 
     with tab4:
       st.subheader("💡 AI Analysis Assistant")
@@ -179,7 +188,7 @@ if data is not None:
 
       if st.button("Generate Analysis"):
           with st.spinner("🤔 Analyzing data..."):
-              analysis_result, python_code = generate_analysis(data, prompt, model)
+              response = generate_analysis(data, prompt, model)
 
               # Update session state
               st.session_state.analysis_count += 1
@@ -187,19 +196,92 @@ if data is not None:
 
               # Display response
               st.markdown("### 📑 Analysis Results")
-              if isinstance(analysis_result, str) and analysis_result.endswith(('.png', '.jpg', '.jpeg')):
-                    if os.path.exists(analysis_result):  # Check if the file exists
+              if isinstance(response, str) and response.endswith(('.png', '.jpg', '.jpeg')):
+                    if os.path.exists(response):  # Check if the file exists
                         # Open the image file
-                        image = Image.open(analysis_result)
+                        image = Image.open(response)
                         # Display the image in Streamlit
                         st.image(image, caption="AI-Generated Graph", use_container_width=True)  # Updated parameter
                     else:
                         st.error(f"⚠️ Image file not found at: {response}")
               else:
                     # If the response is not an image, display it as text
-                    st.write(analysis_result)
-              st.markdown("### 🐍 Python Code Used")
-              st.code(python_code, language="python")
+                    st.write(response)
+
+    # Export to Excel Button
+    if st.button("Export All Analysis to Excel"):
+        with st.spinner("Exporting data to Excel..."):
+            # Create a BytesIO buffer to store the Excel file
+            output = io.BytesIO()
+            with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                # Save Data Overview
+                data.to_excel(writer, sheet_name='Data Overview', index=False)
+                
+                # Save Basic Statistics
+                basic_stats.to_excel(writer, sheet_name='Basic Statistics', index=False)
+                
+                # Save Quartile Statistics
+                quartile_stats.to_excel(writer, sheet_name='Quartile Statistics', index=False)
+                
+                # Save Shape Statistics
+                shape_stats.to_excel(writer, sheet_name='Shape Statistics', index=False)
+                
+                # Save Normality Statistics
+                normality_stats.to_excel(writer, sheet_name='Normality Statistics', index=False)
+                
+                # Save Correlation Analysis
+                correlation_matrix.to_excel(writer, sheet_name='Correlation Analysis', index=False)
+                # Save Correlation Heatmap
+                correlation_heatmap.write_image("correlation_heatmap.png")
+                worksheet = writer.sheets['Correlation Analysis']
+                worksheet.insert_image('H1', 'correlation_heatmap.png')
+                
+                # Save Strong Correlations
+                strong_corr_df.to_excel(writer, sheet_name='Strong Correlations', index=False)
+                
+                # Save Time Series Analysis
+                if len(date_columns) > 0:
+                    time_series_data = data[[date_col, numeric_col]]
+                    time_series_data.to_excel(writer, sheet_name='Time Series Analysis', index=False)
+                    # Save Time Series Plot
+                    time_series_plot.write_image("time_series_plot.png")
+                    worksheet = writer.sheets['Time Series Analysis']
+                    worksheet.insert_image('H1', 'time_series_plot.png')
+                
+                # Save Distribution Analysis
+                distribution_data = data[[selected_feature]]
+                distribution_data.to_excel(writer, sheet_name='Distribution Analysis', index=False)
+                # Save Distribution Plot
+                distribution_plot.write_image("distribution_plot.png")
+                worksheet = writer.sheets['Distribution Analysis']
+                worksheet.insert_image('H1', 'distribution_plot.png')
+                
+                # Save Scatter Plot Analysis
+                if len(numeric_data.columns) >= 2:
+                    scatter_data = data[[x_feature, y_feature]]
+                    scatter_data.to_excel(writer, sheet_name='Scatter Plot Analysis', index=False)
+                    # Save Scatter Plot
+                    scatter_plot.write_image("scatter_plot.png")
+                    worksheet = writer.sheets['Scatter Plot Analysis']
+                    worksheet.insert_image('H1', 'scatter_plot.png')
+                
+                # Save Outlier Analysis
+                outlier_data = data[[outlier_feature]]
+                outlier_data.to_excel(writer, sheet_name='Outlier Analysis', index=False)
+                # Save Boxplot
+                boxplot.write_image("boxplot.png")
+                worksheet = writer.sheets['Outlier Analysis']
+                worksheet.insert_image('H1', 'boxplot.png')
+
+            # Get the Excel file from the buffer
+            output.seek(0)
+            st.success("Export completed successfully!")
+            st.download_button(
+                label="Download Excel File",
+                data=output,
+                file_name="data_analysis.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            )
 
 # Footer
 st.markdown("---")

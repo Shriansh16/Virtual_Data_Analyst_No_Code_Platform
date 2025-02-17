@@ -1,5 +1,3 @@
-# utils/ai_assistant.py
-
 from langchain_groq import ChatGroq
 from pandasai import SmartDataframe
 from config import GROQ_API_KEY, MODEL_NAME, MODEL_TEMPERATURE
@@ -16,5 +14,7 @@ def init_model():
 
 def generate_analysis(data, prompt, model):
     df = SmartDataframe(data, config={"llm": model})
-    return df.chat(prompt)
+    analysis_result = df.chat(prompt)
+    python_code = df.last_code_executed  
+    return analysis_result, python_code
 

@@ -10,3 +10,5 @@ streamlit
 matplotlib
 plotly
 statsmodels
+kaleido
+XlsxWriter
