@@ -4,9 +4,11 @@ import pandas as pd
 from utils.data_loading import load_data
 from utils.visualization import plot_correlation_heatmap, plot_time_series, plot_distribution, plot_scatter, plot_boxplot
 from utils.statistical_analysis import calculate_basic_stats, calculate_quartile_stats, calculate_strong_correlations
-from utils.ai_assistant import init_model, generate_analysis,generate_supporting_visualizations
+from utils.ai_assistant import init_model, generate_analysis
 from datetime import datetime
 from config import SAMPLE_DATASETS
+from PIL import Image
+import os
 
 # Page configuration
 st.set_page_config(page_title="Virtual Data Analyst", layout="wide")
@@ -173,24 +175,7 @@ if data is not None:
 
     with tab4:
       st.subheader("💡 AI Analysis Assistant")
-      analysis_template = st.selectbox(
-        "Choose Analysis Template",
-        ["Custom Question", "Trend Analysis", "Anomaly Detection", "Predictive Insights",
-         "Feature Importance", "Data Quality Assessment"]
-      )
-
-      if analysis_template == "Custom Question":
-          prompt = st.text_area("Ask your question about the data:")
-      else:
-          template_prompts = {
-            "Trend Analysis": "Analyze the main trends in the data, focusing on patterns and changes over time.",
-            "Anomaly Detection": "Identify and explain any unusual patterns or outliers in the data.",
-            "Predictive Insights": "Based on the current data patterns, what insights can you provide about future trends?",
-            "Feature Importance": "Which features in the dataset appear to be most important and why?",
-            "Data Quality Assessment": "Assess the quality of this dataset, including completeness, consistency, and potential issues."
-          }
-          prompt = template_prompts[analysis_template]
-          st.info(f"Using template prompt: {prompt}")
+      prompt = st.text_area("Ask your question about the data:")
 
       if st.button("Generate Analysis"):
           with st.spinner("🤔 Analyzing data..."):
@@ -202,16 +187,17 @@ if data is not None:
 
               # Display response
               st.markdown("### 📑 Analysis Results")
-              st.write(response)
-
-              # Generate and display supporting visualizations
-              st.markdown("### 📊 Supporting Visualizations")
-              numeric_data = data.select_dtypes(include=['float64', 'int64'])
-              date_columns = data.select_dtypes(include=['datetime64']).columns
-
-              visualizations = generate_supporting_visualizations(data, analysis_template, numeric_data, date_columns)
-              for viz in visualizations:
-                  st.plotly_chart(viz, use_container_width=True)
+              if isinstance(response, str) and response.endswith(('.png', '.jpg', '.jpeg')):
+                    if os.path.exists(response):  # Check if the file exists
+                        # Open the image file
+                        image = Image.open(response)
+                        # Display the image in Streamlit
+                        st.image(image, caption="AI-Generated Graph", use_container_width=True)  # Updated parameter
+                    else:
+                        st.error(f"⚠️ Image file not found at: {response}")
+              else:
+                    # If the response is not an image, display it as text
+                    st.write(response)
 
 # Footer
 st.markdown("---")
