@@ -32754,3 +32754,591 @@ print(result)
 2025-02-17 23:29:31 [INFO] Executing Step 7: ResultValidation
 2025-02-17 23:29:31 [INFO] Answer: {'type': 'number', 'value': 109}
 2025-02-17 23:29:31 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:13:04 [INFO] Question: number of males survived
+
+2025-02-18 19:13:04 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:13:04 [INFO] Prompt ID: 49b04e71-1e5b-42e0-9099-65f1c8975bf1
+2025-02-18 19:13:04 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:13:04 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:13:04 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:13:04 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:13:04 [INFO] Using prompt: <dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+180,1,2,"Foo, Mr. Choong",male,35.0,5,6,A.5. 18509,7.8292,,
+122,0,3,"Rush, Mr. Alfred George John",male,30.5,2,0,349234,8.3625,D21,Q
+704,0,1,"Sivola, Mr. Antti Wilhelm",female,,0,1,2623,71.0,B37,S
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ number of males survived
+
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-02-18 19:13:04 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:13:05 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-18 19:13:05 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+180,1,2,"Foo, Mr. Choong",male,35.0,5,6,A.5. 18509,7.8292,,
+122,0,3,"Rush, Mr. Alfred George John",male,30.5,2,0,349234,8.3625,D21,Q
+704,0,1,"Sivola, Mr. Antti Wilhelm",female,,0,1,2623,71.0,B37,S
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ number of males survived
+
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-02-18 19:13:05 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+# Filter the dataframe to get the number of males who survived
+males_survived = dfs[0][dfs[0]['Sex'] == 'male']['Survived'].sum()
+
+# Declare result var: 
+result = {
+    "type": "number", 
+    "value": males_survived
+}
+            ```
+            
+2025-02-18 19:13:05 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:13:05 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:13:05 [INFO] 
+Code running:
+```
+males_survived = dfs[0][dfs[0]['Sex'] == 'male']['Survived'].sum()
+result = {'type': 'number', 'value': males_survived}
+        ```
+2025-02-18 19:13:05 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:13:05 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:13:05 [INFO] Answer: {'type': 'number', 'value': np.int64(109)}
+2025-02-18 19:13:05 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:13:54 [INFO] Question: which gender has more number of survived
+2025-02-18 19:13:54 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:13:54 [INFO] Prompt ID: 55bd80d5-b599-4312-8bc7-7740acaf3af6
+2025-02-18 19:13:54 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:13:54 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:13:54 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:13:54 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:13:54 [INFO] Using prompt: <dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+273,0,1,"Healy, Miss. Hanora ""Nora""",female,,5,6,S.O./P.P. 751,61.175,F4,
+190,1,3,"Klasen, Mr. Klas Albin",female,39.0,4,4,350050,164.8667,,S
+52,0,2,"Ali, Mr. Ahmed",male,35.0,0,3,347063,7.0458,D50,C
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ which gender has more number of survived
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-02-18 19:13:54 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:13:58 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-18 19:13:58 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+273,0,1,"Healy, Miss. Hanora ""Nora""",female,,5,6,S.O./P.P. 751,61.175,F4,
+190,1,3,"Klasen, Mr. Klas Albin",female,39.0,4,4,350050,164.8667,,S
+52,0,2,"Ali, Mr. Ahmed",male,35.0,0,3,347063,7.0458,D50,C
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ which gender has more number of survived
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-02-18 19:13:58 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+# Get the first dataframe from the list
+df = dfs[0]
+
+# Filter the dataframe to get the number of survived for each gender
+survived_by_gender = df[df['Survived'] == 1]['Sex'].value_counts()
+
+# Determine which gender has more number of survived
+if survived_by_gender['male'] > survived_by_gender['female']:
+    result = {"type": "string", "value": "Male"}
+elif survived_by_gender['male'] < survived_by_gender['female']:
+    result = {"type": "string", "value": "Female"}
+else:
+    result = {"type": "string", "value": "Both Male and Female have the same number of survived"}
+
+# Plot a bar chart to visualize the data
+plt.figure(figsize=(10,6))
+plt.bar(survived_by_gender.index, survived_by_gender.values)
+plt.xlabel('Gender')
+plt.ylabel('Number of Survived')
+plt.title('Number of Survived by Gender')
+plt.savefig('survived_by_gender.png')
+
+# Declare result var: 
+print(result)
+            ```
+            
+2025-02-18 19:13:58 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:13:58 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:13:58 [INFO] Saving charts to D:\Virtual_Data_Analyst_No_code_Platform\exports\charts\temp_chart.png
+2025-02-18 19:13:58 [INFO] 
+Code running:
+```
+df = dfs[0]
+survived_by_gender = df[df['Survived'] == 1]['Sex'].value_counts()
+if survived_by_gender['male'] > survived_by_gender['female']:
+    result = {'type': 'string', 'value': 'Male'}
+elif survived_by_gender['male'] < survived_by_gender['female']:
+    result = {'type': 'string', 'value': 'Female'}
+else:
+    result = {'type': 'string', 'value': 'Both Male and Female have the same number of survived'}
+plt.figure(figsize=(10, 6))
+plt.bar(survived_by_gender.index, survived_by_gender.values)
+plt.xlabel('Gender')
+plt.ylabel('Number of Survived')
+plt.title('Number of Survived by Gender')
+plt.savefig('D:/Virtual_Data_Analyst_No_code_Platform/exports/charts/temp_chart.png')
+print(result)
+        ```
+2025-02-18 19:13:58 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:13:58 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:13:58 [INFO] Answer: {'type': 'string', 'value': 'Female'}
+2025-02-18 19:13:58 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:15:30 [INFO] Question: which gender has more number of survived tell me with graph
+2025-02-18 19:15:30 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:15:30 [INFO] Prompt ID: b363dc4f-9c15-4b0b-934d-0d12573b0746
+2025-02-18 19:15:30 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:15:30 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:15:30 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:15:30 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:15:30 [INFO] Using prompt: <dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+248,0,2,"Johnston, Mr. Andrew G",male,0.75,0,0,PC 17599,77.9583,,Q
+540,1,3,"Foreman, Mr. Benjamin Laventall",male,0.42,4,2,SOTON/O2 3101272,25.4667,C106,S
+60,1,1,"Boulos, Mr. Hanna",female,,2,1,2641,151.55,C148,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ which gender has more number of survived tell me with graph
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-02-18 19:15:30 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:15:33 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-18 19:15:33 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:891x12
+PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+248,0,2,"Johnston, Mr. Andrew G",male,0.75,0,0,PC 17599,77.9583,,Q
+540,1,3,"Foreman, Mr. Benjamin Laventall",male,0.42,4,2,SOTON/O2 3101272,25.4667,C106,S
+60,1,1,"Boulos, Mr. Hanna",female,,2,1,2641,151.55,C148,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ which gender has more number of survived tell me with graph
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-02-18 19:15:33 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+# Count the number of survived passengers by gender
+survived_by_gender = df[df['Survived'] == 1]['Sex'].value_counts()
+
+# Create a bar chart
+plt.figure(figsize=(10,6))
+plt.bar(survived_by_gender.index, survived_by_gender.values)
+plt.xlabel('Gender')
+plt.ylabel('Number of Survived Passengers')
+plt.title('Number of Survived Passengers by Gender')
+plt.savefig('survived_by_gender.png')
+
+# Declare result var: 
+result = { 
+    "type": "plot", 
+    "value": "survived_by_gender.png" 
+}
+            ```
+            
+2025-02-18 19:15:33 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:15:33 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:15:33 [INFO] Saving charts to D:\Virtual_Data_Analyst_No_code_Platform\exports\charts\temp_chart.png
+2025-02-18 19:15:33 [INFO] 
+Code running:
+```
+df = dfs[0]
+survived_by_gender = df[df['Survived'] == 1]['Sex'].value_counts()
+plt.figure(figsize=(10, 6))
+plt.bar(survived_by_gender.index, survived_by_gender.values)
+plt.xlabel('Gender')
+plt.ylabel('Number of Survived Passengers')
+plt.title('Number of Survived Passengers by Gender')
+plt.savefig('D:/Virtual_Data_Analyst_No_code_Platform/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'D:/Virtual_Data_Analyst_No_code_Platform/exports/charts/temp_chart.png'}
+        ```
+2025-02-18 19:15:33 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:15:33 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:15:33 [INFO] Answer: {'type': 'plot', 'value': 'D:/Virtual_Data_Analyst_No_code_Platform/exports/charts/temp_chart.png'}
+2025-02-18 19:15:33 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:18:25 [INFO] Question: all time high
+2025-02-18 19:18:25 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:18:25 [INFO] Prompt ID: ebb9ead1-fde7-469a-89e4-041f214ba831
+2025-02-18 19:18:25 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:18:25 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:18:25 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:18:25 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:18:25 [INFO] Using prompt: <dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2011-08-15,51.863998,11.054,38.689999,60.754002,679.820007,118712000
+2016-08-22,56.287998,73.980003,45.001999,65.783997,6.438,17420000
+2022-01-13,755.0,337.799988,6.99,69.199997,5.818,23821500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ all time high
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+2025-02-18 19:18:25 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:18:26 [INFO] HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-18 19:18:26 [INFO] Prompt used:
+            
+<dataframe>
+dfs[0]:2956x7
+Date,Open,High,Low,Close,Adj Close,Volume
+2011-08-15,51.863998,11.054,38.689999,60.754002,679.820007,118712000
+2016-08-22,56.287998,73.980003,45.001999,65.783997,6.438,17420000
+2022-01-13,755.0,337.799988,6.99,69.199997,5.818,23821500
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: 
+type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+
+```
+
+
+
+### QUERY
+ all time high
+
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+If you are asked to plot a chart, use "matplotlib" for charts, save as png.
+
+
+Generate python code and return full updated code:
+            
+2025-02-18 19:18:26 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+# Find the all-time high for each dataframe in dfs
+all_time_highs = []
+for df in dfs:
+    all_time_high = df['High'].max()
+    all_time_highs.append(all_time_high)
+
+# Find the overall all-time high
+overall_all_time_high = max(all_time_highs)
+
+# Declare result var: 
+result = { "type": "number", "value": overall_all_time_high }
+
+# Optional: plot a chart of the high values over time for each dataframe
+# for i, df in enumerate(dfs):
+#     plt.figure(figsize=(10,6))
+#     plt.plot(df['Date'], df['High'], label=f'Dataframe {i}')
+#     plt.xlabel('Date')
+#     plt.ylabel('High')
+#     plt.title('All-Time Highs Over Time')
+#     plt.legend()
+#     plt.savefig(f'all_time_highs_{i}.png')
+
+# If you want to plot all dataframes in one chart
+# plt.figure(figsize=(10,6))
+# for i, df in enumerate(dfs):
+#     plt.plot(df['Date'], df['High'], label=f'Dataframe {i}')
+# plt.xlabel('Date')
+# plt.ylabel('High')
+# plt.title('All-Time Highs Over Time')
+# plt.legend()
+# plt.savefig('all_time_highs.png')
+            ```
+            
+2025-02-18 19:18:26 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:18:26 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:18:26 [INFO] Saving charts to D:\Virtual_Data_Analyst_No_code_Platform\exports\charts\temp_chart.png
+2025-02-18 19:18:26 [INFO] 
+Code running:
+```
+all_time_highs = []
+for df in dfs:
+    all_time_high = df['High'].max()
+    all_time_highs.append(all_time_high)
+overall_all_time_high = max(all_time_highs)
+result = {'type': 'number', 'value': overall_all_time_high}
+        ```
+2025-02-18 19:18:26 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:18:26 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:18:26 [INFO] Answer: {'type': 'number', 'value': np.float64(1243.48999)}
+2025-02-18 19:18:26 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:30:45 [INFO] Question: all time high
+2025-02-18 19:30:45 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:30:45 [INFO] Prompt ID: 4e56ce81-13ac-48d0-bae8-6ff8adece4ed
+2025-02-18 19:30:45 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:30:45 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:30:45 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:30:45 [INFO] Using cached response
+2025-02-18 19:30:45 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:30:45 [INFO] Executing Step 2: Skipping...
+2025-02-18 19:30:45 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:30:45 [INFO] Executing Step 3: Skipping...
+2025-02-18 19:30:45 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:30:45 [INFO] Executing Step 4: Skipping...
+2025-02-18 19:30:45 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:30:45 [INFO] Saving charts to D:\Virtual_Data_Analyst_No_code_Platform\exports\charts\temp_chart.png
+2025-02-18 19:30:45 [INFO] 
+Code running:
+```
+all_time_highs = []
+for df in dfs:
+    all_time_high = df['High'].max()
+    all_time_highs.append(all_time_high)
+overall_all_time_high = max(all_time_highs)
+result = {'type': 'number', 'value': overall_all_time_high}
+        ```
+2025-02-18 19:30:45 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:30:46 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:30:46 [INFO] Answer: {'type': 'number', 'value': np.float64(1243.48999)}
+2025-02-18 19:30:46 [INFO] Executing Step 8: ResultParsing
+2025-02-18 19:30:54 [INFO] Question: all time high
+2025-02-18 19:30:54 [INFO] Running PandasAI with langchain_groq-chat LLM...
+2025-02-18 19:30:54 [INFO] Prompt ID: 4444c34e-e312-4393-b667-c4f90ae647c9
+2025-02-18 19:30:54 [INFO] Executing Pipeline: GenerateChatPipeline
+2025-02-18 19:30:54 [INFO] Executing Step 0: ValidatePipelineInput
+2025-02-18 19:30:54 [INFO] Executing Step 1: CacheLookup
+2025-02-18 19:30:54 [INFO] Using cached response
+2025-02-18 19:30:54 [INFO] Executing Step 2: PromptGeneration
+2025-02-18 19:30:54 [INFO] Executing Step 2: Skipping...
+2025-02-18 19:30:54 [INFO] Executing Step 3: CodeGenerator
+2025-02-18 19:30:54 [INFO] Executing Step 3: Skipping...
+2025-02-18 19:30:54 [INFO] Executing Step 4: CachePopulation
+2025-02-18 19:30:54 [INFO] Executing Step 4: Skipping...
+2025-02-18 19:30:54 [INFO] Executing Step 5: CodeCleaning
+2025-02-18 19:30:54 [INFO] Saving charts to D:\Virtual_Data_Analyst_No_code_Platform\exports\charts\temp_chart.png
+2025-02-18 19:30:54 [INFO] 
+Code running:
+```
+all_time_highs = []
+for df in dfs:
+    all_time_high = df['High'].max()
+    all_time_highs.append(all_time_high)
+overall_all_time_high = max(all_time_highs)
+result = {'type': 'number', 'value': overall_all_time_high}
+        ```
+2025-02-18 19:30:54 [INFO] Executing Step 6: CodeExecution
+2025-02-18 19:30:54 [INFO] Executing Step 7: ResultValidation
+2025-02-18 19:30:54 [INFO] Answer: {'type': 'number', 'value': np.float64(1243.48999)}
+2025-02-18 19:30:54 [INFO] Executing Step 8: ResultParsing
